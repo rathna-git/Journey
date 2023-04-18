@@ -1,13 +1,32 @@
 const mongoose = require('mongoose');
 
-/* MONGOOSE SETUP */
-const MONGO_URI = 'mongodb+srv://rathnac:Code$mith23@cluster0.2pijbl3.mongodb.net/?retryWrites=true&w=majority';
-mongoose.connect(MONGO_URI, {
-    useNewURLParse: true,
-    useUnifiedTopology: true,
-    dbName: 'locations'
-})
-.then(() => console.log('Connected to Mongo DB.'))
-.catch((error) => console.log(`${error} did not connect`));
+
 
 //ADD SCHEMAS HERE
+const PostSchema = new mongoose.Schema(
+    {
+        userId: {
+            type: String,
+            required: true,
+        },
+        location: String, //add Google Vision API here
+        description: String,
+        picturePath: String,
+        userPicturePath: String,
+        likes: {
+            type: Map,
+            of: Boolean,
+        },
+        comments: {
+            type: Array,
+            default: []
+        },
+
+    },
+    { timestamps: true }
+);
+
+
+const Post = mongoose.model('post', PostSchema);
+
+module.exports = { Post };

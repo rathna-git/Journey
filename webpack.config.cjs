@@ -1,7 +1,8 @@
 const path = require( 'path');
 const HTMLWebpackPlugin = require( 'html-webpack-plugin');
 
-module.exports = {
+module.exports = (env) => {
+  return{
     entry: [ 
         './src/index.js'
     ],
@@ -11,9 +12,11 @@ module.exports = {
         filename: 'bundle.js',
     },
 
+    mode: env.NODE_ENV,
+
     devServer: {
         host: 'localhost',
-        port: 3000,
+        port: 8080,
         // enable HMR on the devServer
         hot: true,
         // fallback to root for other urls
@@ -21,7 +24,7 @@ module.exports = {
     
         static: {
           // match the output path
-          directory: path.resolve(__dirname, './dist'),
+          directory: path.resolve(__dirname, 'src'),
           // match the output 'publicPath'
           publicPath: '/',
         },
@@ -71,5 +74,5 @@ module.exports = {
             }
         ]
     }
-
+  }
 }

@@ -2,16 +2,18 @@
   "name": "journey",
   "version": "1.0.0",
   "description": "",
-  "main": "server/server.js",
+  "main": "./src/index.js",
+  "type": "module",
   "scripts": {
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --open --hot --progress --color \" \"nodemon ./server/server.js\"",
-    "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production"
+    "dev": "webpack serve --open --hot --env NODE_ENV=development & NODE_ENV=development nodemon ./src/server/server.js",
+    "start": "NODE_ENV=production node ./src/server/server.js",
+    "build": "webpack --env NODE_ENV=production"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
@@ -26,6 +28,7 @@
     "multer-gridfs-storage": "^5.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0"
   },
   "devDependencies": {
