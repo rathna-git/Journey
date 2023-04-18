@@ -1,6 +1,6 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../models/user.js');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import User from '../models/user.js';
 
 const authController = {};
 
@@ -20,6 +20,7 @@ authController.register = async(req, res) => {
             picturePath, 
             friends,
         });
+        console.log(newUser);
         const savedUser = await newUser.save();
         res.status(201).json(savedUser);
     }catch(err){
@@ -35,10 +36,11 @@ authController.login = async (req, res) => {
         if(!user) return res.status(400).json({msg: 'User does not exist!'});
 
         const isMatch = await bcrypt.compare(password, user.password);
+        console.log('isMatch: ' , isMatch)
         if(!isMatch) return res.status(400).json({msg: 'Invalid Credentials!'});
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
-        delete user.password;
+        delete user.password; //delete password so that it is not sent back to the frontend
         res.status(200).json({token, user});
 
     } catch(err){
@@ -46,4 +48,4 @@ authController.login = async (req, res) => {
     }
 };
 
-module.export = authController;
+export default authController;

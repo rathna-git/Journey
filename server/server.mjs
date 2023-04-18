@@ -1,21 +1,22 @@
-const express = require('express');
-const bodyParser =  require('body-parser');
-const path = require ('path');
-
-const cors = require('cors');
-const dotenv =  require ('dotenv');
-const multer= require ('multer');
-// const helmet =  require('helmet');
+import express from 'express';
+import bodyParser from 'body-parser';
+import path  from 'path';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import multer from 'multer';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
-import userRoutes from '.routes/users.js';
-import postRoutes from '.routes/posts.js';
+import userRoutes from './routes/users.js';
+import postRoutes from './routes/posts.js';
 
 import authMiddleware from './middleware/auth.js';
-const authController = require('./controllers/authController.js');
+import authController from './controllers/authController.js';
 import postController from './controllers/postsController.js';
-import{ User} from './models/user.js';
-import { Post } from './models/posts.js';
+import  User  from './models/user.js';
+import  Post  from './models/posts.js';
 import { users, posts } from './data/index.js';
 
 /* CONFIGURATIONS */
@@ -24,11 +25,11 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 app.use(express.json());
-// app.use(helmet());
-// app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));
-// app.use(morgan('common'));
-// app.use(bodyParser.json({limit: '30mb', extended: true}));
-// app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({policy: "cross-origin"}));
+app.use(morgan('common'));
+app.use(bodyParser.json({limit: '30mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../src')));
 
@@ -61,15 +62,15 @@ app.use('/posts', postRoutes);
 
 /* MONGOOSE SETUP */
 const DBPORT = process.env.PORT || 6001;
-mongoose.connect('mongodb+srv://rathnac:Code$mith23@cluster0.2pijbl3.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://rathnac:xDo71aeTC3wKJUmA@cluster0.2pijbl3.mongodb.net/?retryWrites=true&w=majority', {
     useNewURLParser: true,
     useUnifiedTopology: true,
 })
 .then(() => {app.listen(DBPORT, () => console.log(`Connected to Mongo DB on port ${DBPORT}`))
 
 /*ADD DATA ONE TIME */
-User.insertMany(users);
-Post.insertMany(posts);
+// User.insertMany(users);
+// Post.insertMany(posts);
 
 })
 .catch((error) => console.log(`${error} did not connect`));
@@ -94,4 +95,4 @@ app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}...`);
   });
   
-  module.exports = app;
+export default app;

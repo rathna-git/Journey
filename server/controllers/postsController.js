@@ -1,5 +1,5 @@
-const Post = require('../models/posts.js');
-const User = require('../models/user.js');
+import Post from '../models/posts.js';
+import User from '../models/user.js';
 
 
 const postsController = {};
@@ -79,4 +79,4 @@ postsController.likePost = async(req, res) => {
     }
 }
 
-module.exports = postsController;
+export default postsController;

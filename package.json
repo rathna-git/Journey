@@ -5,8 +5,8 @@
   "main": "./src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "webpack serve --open --hot --env NODE_ENV=development & NODE_ENV=development nodemon ./src/server/server.js",
-    "start": "NODE_ENV=production node ./src/server/server.js",
+    "dev": "webpack serve --open --hot --env NODE_ENV=development & NODE_ENV=development nodemon ./server/server.mjs",
+    "start": "NODE_ENV=production node ./server/server.mjs",
     "build": "webpack --env NODE_ENV=production"
   },
   "keywords": [],

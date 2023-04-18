@@ -1,4 +1,4 @@
-import { User } from "../models/user.js";
+import  User  from "../models/user.js";
 
 
 const userController = {};
@@ -67,4 +67,4 @@ userController.addRemoveFriend = async(req,res) => {
     }
 }
 
-module.exports = userController;
+export default userController;

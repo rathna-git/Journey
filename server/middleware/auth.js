@@ -22,4 +22,4 @@ authMiddleware.verifyToken = async (req,res,next) =>{
     }
 }
 
-module.exports = authMiddleware;
+export default authMiddleware;
