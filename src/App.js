@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Routes, Route } from 'react-router-dom';
 
-import Main from './components/main';
 
-const App = props => {
+
+import Main from './components/main.jsx';
+
+function App(){
     
         return(
         // <div className='router'>

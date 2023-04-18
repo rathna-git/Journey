@@ -64,7 +64,6 @@ const DBPORT = process.env.PORT || 6001;
 mongoose.connect('mongodb+srv://rathnac:Code$mith23@cluster0.2pijbl3.mongodb.net/?retryWrites=true&w=majority', {
     useNewURLParser: true,
     useUnifiedTopology: true,
-    dbName: 'locations'
 })
 .then(() => {app.listen(DBPORT, () => console.log(`Connected to Mongo DB on port ${DBPORT}`))
 
