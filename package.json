@@ -5,8 +5,8 @@
   "main": "./src/index.js",
   "type": "module",
   "scripts": {
-    "dev": "webpack serve --open --hot --env NODE_ENV=development & NODE_ENV=development nodemon ./server/server.mjs",
-    "start": "NODE_ENV=production node ./server/server.mjs",
+    "dev": "webpack serve --open --hot --env NODE_ENV=development & NODE_ENV=development nodemon ./server/server.js",
+    "start": "NODE_ENV=production node ./server/server.js",
     "build": "webpack --env NODE_ENV=production"
   },
   "keywords": [],
@@ -35,6 +35,7 @@
     "react-dropzone": "^14.2.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.10.0",
+    "redux-devtools-extension": "^2.13.9",
     "redux-persist": "^6.0.0",
     "yup": "^1.1.1"
   },

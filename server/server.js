@@ -8,13 +8,15 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import mongoose from 'mongoose';
 import { fileURLToPath } from 'url';
+/* IMPORT ROUTE PATHS */
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import postRoutes from './routes/posts.js';
-
+/* IMPORT MIDDLEWARE & CONTROLLER PATHS */
 import authMiddleware from './middleware/auth.js';
 import authController from './controllers/authController.js';
 import postController from './controllers/postsController.js';
+/* IMPORT MODEL PATHS */
 import  User  from './models/user.js';
 import  Post  from './models/posts.js';
 import { users, posts } from './data/index.js';
@@ -32,11 +34,6 @@ app.use(bodyParser.json({limit: '30mb', extended: true}));
 app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../src')));
-
-// app.get('/posts', (req,res) => {
-//    return res.status(200).sendFile(path.join(__dirname, '../src/index.html'))
-//    // res.send('Hello!!');
-// });
 
 const PORT = 3000;
 
@@ -62,7 +59,7 @@ app.use('/posts', postRoutes);
 
 /* MONGOOSE SETUP */
 const DBPORT = process.env.PORT || 6001;
-mongoose.connect('mongodb+srv://rathnac:xDo71aeTC3wKJUmA@cluster0.2pijbl3.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URI, {
     useNewURLParser: true,
     useUnifiedTopology: true,
 })
