@@ -14,7 +14,7 @@ postsController.createPost = async(req, res) => {
         userId,
         firstName: user.firstName,
         lastName: user.lastName,
-        location: user.location,
+       // location: user.location,
         description,
         userPicturePath: user.picturePath,
         picturePath,

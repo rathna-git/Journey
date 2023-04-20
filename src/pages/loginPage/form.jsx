@@ -2,140 +2,166 @@ import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { setLogin } from "../../reducers/userReducer.js";
+import { setLogin, setUser } from "../../reducers/userReducer.js";
 import { useNavigate } from "react-router-dom";
 import Dropzone from "react-dropzone";
 
-const registerSchema = yup.object().shape({
-    firstName: yup.string().required("required"),
-    lastName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    password: yup.string().required("required"),
-    picture: yup.string().required("required"),
-});
+// const registerSchema = yup.object().shape({
+//     firstName: yup.string().required("required"),
+//     lastName: yup.string().required("required"),
+//     email: yup.string().email("invalid email").required("required"),
+//     password: yup.string().required("required"),
+//     //picture: yup.string().required("required"),
+// });
   
-const loginSchema = yup.object().shape({
-    email: yup.string().email("invalid email").required("required"),
-    password: yup.string().required("required"),
-});
+// const loginSchema = yup.object().shape({
+//     email: yup.string().email("invalid email").required("required"),
+//     password: yup.string().required("required"),
+// });
 
-const initialValuesRegister = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    picture: "",
-};
+// const initialValuesRegister = {
+//     firstName: "",
+//     lastName: "",
+//     email: "",
+//     password: "",
+//    // picture: "",
+// };
 
-const initialValuesLogin = {
-    email: "",
-    password: "",
-  };
+// const initialValuesLogin = {
+//     email: "",
+//     password: "",
+//   };
 
 
   
 
 const Form = () => {
-  const [pageType, setPageType] = useState("login");
+ const [pageType, setPageType] = useState("login");
+ const [form , setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+ });
+   
+ const navigate = useNavigate();
+//   const [firstName, setfirstName] = useState('');
+//   const [lastName, setlastName] = useState('');
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
-  const register = async(values, onSubmitProps) =>{
-    //this allows us to send form info with image
-    const formData = new FormData();
-    for (let value in  values){
-        formData.append(value, values[value]);
-    }
-    formData.append("picturePath", values.picture);
-    const savedUserResponse = await fetch(
-        "http://localhost:3001/auth/register",
-        {
-         method: "POST",
-         body: formData,
-        }
-    );
-    const savedUser = await savedUserResponse.json();
-    onSubmitProps.resetForm();
-
-    if(savedUser){
-        setPageType("login");
-    }
-  };
-
-  const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login",{
-        method: "POST",
-        headers: { "Content-Type": "application/json"},
-        body: JSON.stringify(values),
+//This methods will update the state properties,
+  function updateForm(value){
+    return setForm((prev) => {
+        return {...prev, ...value};
     });
-    const loggedIn = await loggedInResponse.json();
-    onSubmitProps.resetForm();
-    if(loggedIn){
-        dispatch(
-            setLogin({
-                user: loggedIn.user,
-                token: loggedIn.token,
-            })
-        );
-        navigate('/home');
+  }
+//This function will handle
+// const handleFormSubmit = (e) => {
+//     e.preventDefault();
+
+//     dispatch(setLogin({
+//         firstName: firstName,
+//         lastName: lastName,
+//         email: email,
+//         password: password,
+//         loggedIn: true,
+        
+ //   }));
+
+ //   navigate("/home");
+//}
+async function register() {
+    
+    const newUser = {...form};
+    
+
+    const registerResponse = await fetch("http://localhost:3001/auth/register",
+      {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      })
+      .catch(error => {
+        window.alert(error);
+        return;
+      });
+    const registeredUser = await registerResponse.json();
+    setForm({firstName: "", lastName: "", email: "", password:""});
+    if(registeredUser){
+        dispatch(setUser({
+            firstName: registeredUser.firstName,
+            lastName: registeredUser.lastName,
+            email: registeredUser.email,
+            password: registeredUser.password,
+            loggedIn: true,
+                    
+        }));
+    setPageType("login");
+    }
+    
+  };
+const loggedinuser = useSelector((state)=> state.user);
+async function login(){
+
+console.log("inside login async,", loggedinuser);
+    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loggedinuser),
+    });
+   const loggedIn = await loggedInResponse.json();
+    // console.log('inside login async, loggedIn:' , loggedIn);
+    // console.log('inside login async, user:' , loggedinuser);
+    
+   if (loggedIn) {
+      dispatch(
+        setLogin({
+          user: loggedIn.email,
+          token: loggedIn.token,
+        })
+      );
+      navigate("/home");
     }
   };
 
+  async function handleFormSubmit(e) {
+    e.preventDefault();
 
+    if (isLogin) await login();
+    if (isRegister) await register();
+  };
 
-const handleFormSubmit = async (values, onSubmitProps) => {
-    if (isLogin) await login(values, onSubmitProps);
-    if (isRegister) await register(values, onSubmitProps);
-};
-    
     
 return (
-  <Formik
-    onSubmit={handleFormSubmit}
-    initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
-    validationSchema={isLogin ? loginSchema : registerSchema}
-   >
-
-{({
-        values,
-        errors,
-        touched,
-        handleBlur,
-        handleChange,
-        handleSubmit,
-        setFieldValue,
-        resetForm,
-}) => (
- <form className="col-4" onSubmit={handleFormSubmit}> 
+ <form className="col-4" onSubmit={(e) => handleFormSubmit(e)}> 
 
     {isRegister && (
     <>
     <div className="mb-4">
       <label
         htmlFor="firstName"
-        className="form-label"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.firstName}>
+        className="form-label">
         First Name :
       </label>
-      <input type="text" className="form-control" id="firstName" aria-describedby="firstName"/>
+      <input type="text" className="form-control" onChange={(e)=> updateForm({firstName: e.target.value})} id="firstName" aria-describedby="firstName"/>
     </div>
     <div className="mb-4">
     <label
         htmlFor="lastName"
-        className="form-label"
-        onBlur={handleBlur}
-        onChange={handleChange}
-        value={values.lastName}>
+        className="form-label">
         Last Name :
       </label>
-      <input type="text" className="form-control" id="lastName" aria-describedby="lastName"/>                      
+      <input type="text" className="form-control" onChange={(e)=> updateForm({lastName: e.target.value})} id="lastName" aria-describedby="lastName"/>                      
     </div>
    
-      <div className="mb-4">
+      {/* <div className="mb-4">
         <label
           htmlFor="formFile"
           className="form-label"
@@ -145,31 +171,24 @@ return (
           Profile Picture :
        </label>
       <input type="file" className="form-control" id="formFile" aria-describedby="picture"/>
-      </div>
+      </div> */}
     </>
     )}
     <div className="mb-4">
       <label
           htmlFor="email"
-          className="form-label"
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={values.email}>
+          className="form-label">
           Email :
        </label>
-        <input type="email" className="form-control" id="email" aria-describedby="emailHelp"/>
+        <input type="email" className="form-control" onChange={(e)=> updateForm({email: e.target.value})} id="email" aria-describedby="emailHelp"/>
     </div>
     <div className="mb-4">
       <label
           htmlFor="password"
-          className="form-label"
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={values.password}
-          name="password">
+          className="form-label">
           Password :
        </label>
-        <input type="password" className="form-control" id="password" aria-describedby="password"/>
+        <input type="password" className="form-control" onChange={(e)=> updateForm({password: e.target.value})} id="password" aria-describedby="password"/>
     </div>
     <div>
         <button type="submit" className="btn btn-xl btn-primary">{isLogin ? "LOGIN" : "REGISTER"}</button>
@@ -178,7 +197,6 @@ return (
       <a href="#"
       onClick={() => {
         setPageType(isLogin ? "register" : "login");
-        resetForm();
       }}>
      {isLogin 
      ? "Don't have an account? Sign Up here."
@@ -186,9 +204,6 @@ return (
      </a>
     </div>
  </form> 
- )}
- 
- </Formik>
 )
 }
 

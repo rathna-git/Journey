@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setMode, setLogout } from "../../reducers/userReducer.js";
+import { setLogout } from "../../reducers/userReducer.js";
 import { useNavigate } from "react-router-dom";
 
 
@@ -9,14 +9,15 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => {
-    console.log(state)
-  state.user
-  }
-  );
+  // const user = useSelector((state) => state.user);
+  // const fullName = `${user.firstName} ${user.lastName}`;
+const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const fullName = `${user.firstName} ${user.lastName}`;
+    dispatch(setLogout());
 
+    navigate("/");
+}
   return (
     <nav className ="navbar ">
       <div className ="container-fluid">
@@ -35,9 +36,9 @@ const Navbar = () => {
     </form>
         
         <ul className ="nav navbar-nav navbar-right">
-      
-          <li><button className="nav-item btn btn-link" role="button"><span className="glyphicon glyphicon-user"></span> {fullName} </button></li>
-          <li><button className="nav-item btn btn-link logout" role="button" onClick={() => dispatch(setLogout())}> <span className="glyphicon glyphicon-log-in"></span> Logout</button></li>
+          <li><button className="nav-item btn btn-link" role="button"><span className="glyphicon glyphicon-globe"></span></button></li>
+          <li><button className="nav-item btn btn-link" role="button"><span className="glyphicon glyphicon-user"></span>  </button></li>
+          <li><button type="submit" className="nav-item btn btn-link logout" role="button" onClick={(e) => handleSubmit(e)}> <span className="glyphicon glyphicon-log-in"></span> Logout</button></li>
             
           </ul>
       </div>

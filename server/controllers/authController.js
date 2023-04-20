@@ -18,8 +18,8 @@ authController.register = async(req, res) => {
             firstName, 
             lastName, 
             email, 
-            password: passwordHash, 
-            picturePath, 
+            password, 
+           // picturePath, 
             friends,
         });
         console.log(newUser);
@@ -33,11 +33,13 @@ authController.register = async(req, res) => {
 /* LOG IN */
 authController.login = async (req, res) => {
     try{
-        const {email, password} = req.body;
+        const {email, password} = req.params;
+       console.log('authController email', email);
         const user = await User.findOne({email: email});
         if(!user) return res.status(400).json({msg: 'User does not exist!'});
 
         const isMatch = await bcrypt.compare(password, user.password);
+       // const isMatch = await compare(password, user.password)
         // console.log('isMatch: ' , isMatch)
         if(!isMatch) return res.status(400).json({msg: 'Invalid Credentials!'});
 
@@ -46,6 +48,7 @@ authController.login = async (req, res) => {
         res.status(200).json({token, user});
 
     } catch(err){
+        console.log('inside login controller');
         res.status(500).json({error: err.message});
     }
 };
