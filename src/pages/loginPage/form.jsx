@@ -161,17 +161,15 @@ return (
       <input type="text" className="form-control" onChange={(e)=> updateForm({lastName: e.target.value})} id="lastName" aria-describedby="lastName"/>                      
     </div>
    
-      {/* <div className="mb-4">
+     <div className="mb-4">
         <label
           htmlFor="formFile"
           className="form-label"
-          onBlur={handleBlur}
-          onChange={handleChange}
-          value={values.picture}>
+         >
           Profile Picture :
        </label>
       <input type="file" className="form-control" id="formFile" aria-describedby="picture"/>
-      </div> */}
+      </div> 
     </>
     )}
     <div className="mb-4">

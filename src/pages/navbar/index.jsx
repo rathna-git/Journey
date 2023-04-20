@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const user = useSelector((state) => state.user);
+ const user = useSelector((state) => state.user);
   // const fullName = `${user.firstName} ${user.lastName}`;
 const handleSubmit = (e) => {
     e.preventDefault();

@@ -79,6 +79,22 @@ module.exports = (env) => {
               exclude: /node_modules/,
               use: ['style-loader', 'css-loader'],
             },
+            {
+              test: /\.(png|jpe?g|gif)$/i,
+  
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: '[name].[ext]'
+                }
+                },
+              ],
+            },
+            {         
+            test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+            loader: 'file-loader'
+            },
         ]
     }
   }

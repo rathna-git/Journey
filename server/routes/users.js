@@ -6,7 +6,7 @@ import authMiddleware from '../middleware/auth.js';
 const router = express.Router();
 
 /* READ */
-router.get('/:id', authMiddleware.verifyToken, userController.getUser);
+router.get('/:id', userController.getUser);
 router.get('/:id/friends', authMiddleware.verifyToken, userController.getUserFriends);
 
 /* UPDATE */
