@@ -1,7 +1,11 @@
 import React from "react";
+import NavBar from "../navbar/index.jsx"
 
 const HomePage = () => {
-    return (<div>HomePage</div>)
+    return (
+
+           <NavBar/>
+    )
 }
 
 export default HomePage;

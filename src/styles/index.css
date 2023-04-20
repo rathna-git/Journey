@@ -1,0 +1,101 @@
+
+ html,
+ body,
+ #root,
+ .app{
+    height: 100%;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    color: #000411;
+  }
+
+nav{
+    background-color: #FFE74C;
+}
+.navbar-header .navbar-brand{
+  color :#160C28;
+  font-size: 26px;
+}
+
+.navbar-form input,
+.navbar-form .btn{
+  border-radius: 15px;
+}
+
+.navbar-nav .btn{
+  color :#160C28;
+  font-size: 15px;
+  margin: 10px;
+  text-decoration: none;
+  border: none;
+}
+.navbar-nav .btn:focus,
+.nabar-nav .btn:hover{
+ text-decoration: none;
+ outline: none;
+ font-size: 17px;
+ transition: 0.2s;
+}
+
+.masthead {
+  background-color: rgba(255,255,255,0.5);
+}
+.container{ 
+ width: 100%;
+ display:flex;
+ flex-wrap: inherit;
+ align-items:center;
+ justify-content: center;
+ background-image: url('../../public/assets/photo-1507608869274-d3177c8bb4c7.avif');
+ background-position: center; /* Center the image */
+ background-repeat: no-repeat; /* Do not repeat the image */
+ background-size: cover;
+ background-blend-mode: lighten;
+}
+
+
+
+.container .loginContainer{
+  border: 1px solid black;
+  margin: 20%;
+  padding: 6%;
+  border-radius: 25px;
+
+
+}
+.loginnav .navbar-header{
+  width: 100%;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+}
+
+.loginContainer div{
+  margin: 8px 0px;
+}
+
+.loginContainer button{
+  margin-top: 3%;
+ width: 100%;
+ background-color: #160C28;
+ color: #fff;
+ -webkit-box-shadow: 3px 3px 28px 1px rgba(77,77,77,0.74);
+-moz-box-shadow: 3px 3px 28px 1px rgba(77,77,77,0.74);
+box-shadow: 3px 3px 28px 1px rgba(77,77,77,0.74);
+}
+
+.loginContainer button:hover{
+  
+  background-color: #301a5a;
+  color: #fff;
+  
+ }
+
+ .loginContainer .signup{
+  margin-top: 10%;
+ }
+
+ .loginContainer .signup a {
+  font-size: 15px;
+  text-decoration: underline;
+ }

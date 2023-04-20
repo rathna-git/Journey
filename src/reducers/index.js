@@ -12,13 +12,13 @@
 import { combineReducers } from 'redux';
 
 // import all reducers here
-import journeyReducer from './journeyReducer.js';
+import userReducer from './userReducer.js';
 
 
 // combine reducers
 const reducers = combineReducers({
   // if we had other reducers, they would go here
-  journey: journeyReducer
+  user: userReducer,
 });
 
 // make the combined reducers available for import

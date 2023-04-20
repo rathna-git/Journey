@@ -1,5 +1,6 @@
 const path = require( 'path');
 const HTMLWebpackPlugin = require( 'html-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (env) => {
   return{
@@ -36,17 +37,18 @@ module.exports = (env) => {
          * express server while using hot-reload webpack server
          * routes api fetch requests from localhost:8080/api/* (webpack dev server)
          * to localhost:3000/api/* (where our Express server is running)
-         
+         */
         proxy: {
-          '/posts': {
+          '/auth': {
             target: 'http://localhost:3000/',
             secure: false,
           },
+          /*
           '/assets/**': {
             target: 'http://localhost:3000/',
             secure: false,
-          },
-        }, */
+          }, */
+        }, 
     },
 
     plugins: [
@@ -81,3 +83,4 @@ module.exports = (env) => {
     }
   }
 }
+
